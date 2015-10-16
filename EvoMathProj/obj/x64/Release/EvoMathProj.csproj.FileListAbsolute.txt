@@ -1,0 +1,17 @@
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\bin\x64\Release\EvoMathProj.exe.config
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\bin\x64\Release\EvoMathProj.exe
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\bin\x64\Release\EvoMathProj.pdb
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\bin\x64\Release\EvoGL.dll
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\bin\x64\Release\EvolutionTools.dll
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\bin\x64\Release\Tao.OpenGl.dll
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\bin\x64\Release\Tao.Platform.Windows.dll
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\bin\x64\Release\EvoGL.pdb
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\bin\x64\Release\EvolutionTools.pdb
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\obj\x64\Release\EvoMathProj.csprojResolveAssemblyReference.cache
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\obj\x64\Release\EvoMathProj.AppForm.resources
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\obj\x64\Release\EvoMathProj.AppLoader.resources
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\obj\x64\Release\EvoMathProj.AppWorking.resources
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\obj\x64\Release\EvoMathProj.Properties.Resources.resources
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\obj\x64\Release\EvoMathProj.csproj.GenerateResource.Cache
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\obj\x64\Release\EvoMathProj.exe
+C:\Users\Ryan\Desktop\VSSD\vs projects\EvoMathProj\EvoMathProj\obj\x64\Release\EvoMathProj.pdb

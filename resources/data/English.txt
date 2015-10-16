@@ -1,0 +1,237 @@
+Evolutionary  Computation
+Neural Network Optimization via Genetic Algorithms: A Case Study
+
+
+ 
+Ryan J. Wallace
+Molecular Biology & Bioinformatics
+CSCI Independent Study - Evolutionary Computation
+Department of Computer Science
+University of Wisconsin - Parkside
+walla026@rangers.uwp.edu
+
+Abstract —Evolutionary Computation has been used in wide variety of modeling and optimization problems since the beginnings of the computer era. A general overview of genetic algorithms, including their relationships with neural networks, will be reviewed. A simple neural network model will be proposed and trained with a Genetic Algorithm, varied over several parameters and conditions. Future directions of this case study and its theoretical implications, will be discussed.  
+
+	INTRODUCTION
+The basis for many concepts within the broad field of Evolutionary Computation, began as inspirations from biology, most notably the Theory of Evolution and the concept of natural selection. In many contexts involving Genetic Algorithms (GAs) as a computational tool, they are often treated as a black box to design or control the system [1]. 
+In this article, this is assumed true for a given experimental trial, however, the overall analysis will involve the effects of varying properties of the GAs themselves. Therefore, the perspective shifts to one where the goal is an optimization of the GA process, rather than one of the solutions directly. 
+The relationship of GAs as a computational algorithm, alongside their biological foundations, provide insights regarding the construction and components of GAs. More specifically, the overlap between GAs and the field of Artificial Life, create an interesting overlap. When viewed through a combined computational and biological lens, both fields complement each other, and could provide insights, inspirations, and future research directions.
+In the following case study a simple Neural Network model is used, with the parameters and functional behaviors of the genetic algorithm during a specific experimental trial held constant. More specifically, how these parameters are modified and the effect they have on the algorithm's performance will be the main aspects explored. The neural network will be trained to perform a simple image recognition of a set of faces obtained from The University of Essex [2]. 
+These sets of faces contain twenty images per person, and contains 113 young men in similar lighting, background, and facial position. Since only color distributions for specific image regions are being considered during network training and testing, the process becomes more similar to image recognition rather than a more specific facial recognition algorithm.
+This allows the results of the experimentation to highlight the effectiveness and efficiency of the algorithm as a pure optimization algorithm applicable to a much broader range of future research, rather than solely facial recognition. 
+The overall model used in the case study can be broken into two main sections; the GA used to evolve the solution and the Neural Network used for experimental performance measurement.
+
+	GENETIC ALGORITHM OVERVIEW
+The origins of Evolutionary Computation and GAs, began independently at several institutions during the 1950's and 1960's. The names of Bledsoe, Box, Bremermann, Fraser, and Friedman  are associated with a variety of work during that time period according to Mitchell [1]. Almost all contained some variation of a selection or "fitness" function. Many used a population of solutions, often represented as a binary string inspired from the biological chromosome. 
+Additionally by the late 1960s, researchers such as Fogel, Owens, and Walsh [3] proposed "evolutionary programming" where candidate solutions are represented as finite-state machines, alongside selection and mutation operators. Another contribution from Rechenberg [4] produced "evolutionary strategies", an optimization algorithm for real-valued parameters. Eventually these originally separate areas began communication, and all still remain active areas of research [1]. 
+GAs are found in various fields and are active in multiple areas. Mitchell describes many areas involving GAs, where modeling can involve the economics, ecology, immune systems, social systems, population genetics, machine learning, and the weather. Protein structures, the emergence of markets, resource flow, symbiosis, classifier systems and the modification of neural network topologies are a few prime examples. Additional research applications include both the modeling and prediction of numerical, combinatorial, and structural problems.
+Modern GAs are most generally accepted as defined by John Holland and his associates while at the University of Michigan. A population of "organisms", or candidate solutions, are represented by their individual "chromosomes", or binary strings. During each generation a binary string has applied to it the evolutionary and genetic pressures associated.
+The GA process itself begins by generating an initial population of solutions, often by creating random chromosomes. They are measured via the fitness function(s) which chooses optimum solutions  and selects the parents of the next generation. The process of offspring generation from the parental population consists of both mutations of a single parental chromosome, or the mutations and crossovers of the chromosomes of two parents. Mutation may involve insertion, deletion, inversion, duplication, and more. Crossover involves the parental chromosomes swapping sections of their genetic information, effectively analogous to sexual reproduction. These swapped sections may also be of unequal size or offset in their crossover positions, as often happens in biology. This new population may consist of the parents, or be entirely newly generated offspring. Nonetheless, this process of selection and generation repeats until some predetermined measurement threshold is reached, or a time limit expires. A simplified example is shown by Mitchell:
+
+	Start with a randomly generated population of chromosomes.
+	Calculate the fitness of each chromosome in the population.
+	Apply selection and genetic operators (crossover and mutation) to the population to create a new population.
+	Go to step 2.
+
+An individual iteration of the algorithm is called a generation, and can be iterated many times. When considering theoretical evolution, there are still many variables unaccounted for in this simple example, such as the details regarding the selection of the parental population, and how to distribute the chance to be a parent. Some researchers have done a "fitness-proportionate selection", and others have scaled fitness function, alongside incorporations of other described concepts [5].
+
+	NEURAL NETWORK OVERVIEW
+Originally inspired by the biological neuron and synapse, Neural Networks (NNs) are very common tool used in machine learning. The first attempts to modify NNs was started by David Montana and Lawrence Davis in 1989 [6]. The idea was to evolve the synaptic weights in a fixed network, rather than using a back-propagation algorithm. This often leads to the algorithm being trapped in local minima, hindering the power and overall performance of these algorithms. There will be material discussed later which will attempt to reduce these effects.
+In the construction of a simple feed forward NN, neurons are divided into layers, usually with an input layer of values, a "hidden" layer of computational units, and a final layer of output values. Synapses connect all neurons between each layer. A synapse takes in a numerical value and either inhibits or excites the value from one neuron to another neuron. The general architecture can then be derived through inspection. A typical feed forward network is shown in Fig 1.
+
+
+
+
+
+
+
+
+
+
+
+(Fig. 1)
+The feed forward NN used in this example, and many others, contain fuzzy logic. Neuronal output values take on a continuous value, rather than a binary on or off state. Consequently, these fuzzy output values may be affected by connected synaptic weights. Therefore, when computing the input value for an individual neuron, the summation of respective inputs received x_i and the respective synaptic weights w_ij will arrive to the equation
+
+	y_j  =?_(i=0)¦?x_i w_ij ?	(1)
+
+where y_j is the summation of weighted values from the previous layer. The output of a neuron is a function of this summated input, with constants of a bias ß and threshold or sensitivity variable a, defined by the individual neuron, individual candidate solution, or the algorithm as whole. A generalized form leads to the equation
+
+	A(y) = a(y + ß)	(2)
+
+where A is the specific activation value of the a neuron. There are variety of functions used to process the output of the neuron, and commonly the Logistic Sigmoid Function is used
+
+	S(A)=1/(1 + e^(-A) )	(3)
+
+where S(A) is the output value of a neuron. It is important to note that each individual neuron will have its own sensitivity and (potentially) bias values, creating unique and differing functional behavior, in addition to the effects of its respective neuronal synapses. In some research, the output layer will continue the sigmoid processing for each output. In the context of this case study, the output o_k is calculated solely by Eq. 1 as summation of weighted values from the hidden neuron layer, rather than performing an additional sigmoid calculation.
+
+	CASE STUDY GENETIC ALGORITHM MODEL
+A. Genetic Algorithm Base Model
+The GA used in this specific case study has been purposely limited to remove some effects, and test others more closely related to GAs. While the further extensions of this model will be discussed later, this section will include the functionality in the experiments performed.
+B. Initial Population & Random Effects
+The algorithm begins by generating a homogeneous non-random population. This removes the random effects of differing experiment's initial populations', to accentuate the effects of evolution during the experiments. While differing experiments may have respectively differing random seeds producing differing random values over time, experiments performed with the same seed will have the same initial random mutations. This will only change until another property affects the order of random number generation. While the random values generated will in no doubt chaotically drift regardless, the randomness may be considered to be constant unless affected by other experimental variables. An attempt at reducing these random effects is attempted by increasing the sample size of random seeds tested.
+C. Population Generation
+The next step of the algorithm involves a creation of a parental population, by performing an evaluation and sorting of all candidate solutions using the experiment specific fitness function(s). In some experiments, multiple fitness functions can be used to allow a hierarchical sorting of their respective values. Therefore when an equality occurs during the sorting procedure, additional comparisons of additional fitness functions may be used to determine the sorting order.
+A survival population is created by selecting a determined number of best performing solutions, although in the course of this case study only the singular best performing candidate solution is used in the parental population. This effectively renders the survival size population to a constant of one in the case study. Additionally, no recombination will occur within the parental population. These decisions are choice limitations within the current research project, to simplify the case study and allow other parameters to be more directly analyzed. However, the programmatic structure of the algorithms are not limited in such ways, allowing many future research opportunities, which will be discussed later in the article.
+When determining the offspring of the next generation, the newly open positions are filled by mutated copies of the parental population. This is analogous to biological asexual reproduction. While not including sexual recombination within the GA limits is power, this, and all other limited effects discussed below are choice limitations and will not be tested.
+D. Genetic Values & Mutational Events
+An individual candidate solution contains a biological genome analog, which itself consists of an array of single genetic values. An individual genetic value within this genomic array determines a functional or numerical property of the candidate solution. This genetic value contains one publically accessible value, which represents the phenotype value of said genetic value. The phenotype value is numerically continuous, although it can be modified and adjusted when implemented to have a specific numerical range or behavior. 
+Topological and structural mutations will not be tested as mutational operators, but would rather be experiment specific constants allowing the evolutionary effects on said constants to be tested. 
+In addition to the phenotype value, internally exists a genetic momentum term. This is determined by previous mutations that occurred in a genetic value's evolutionary history. This term attempts to counter the effects of local minima stagnation, a problem previously described by Davis and Montana [6]. Under certain conditions, the stored momentum is added to the phenotype value, altering the behavior of a candidate solution. Additionally, this stored genetic momentum can be described over iterative time, where m is the stored momentum value, M being the currently effective mutation value, and a, which determines the proportion of momentum which determines f.
+
+	m_(t+1)  = am_t  + (1-a)M_t	(4)
+
+With M_t=0, this equation is functionally applied to all genetic values of every candidate solution at every generation iteration. Therefore, the momentum will approach zero over generational time, creating a wide range of possible values available over time. 
+Given the occurrence of a genetic drift mutation event or random mutation event occurrence, the following equation describes the simple consequential additive effect.
+
+	p_(t+1)  = p_t  + m_tf	(5)
+
+Where p is the phenotype value at time t. The  occurrence of a genetic drift mutation event is determined probabilistically by a constant, allowing Eq. 5 to occur directly following Eq. 4's application. Therefore, while genetic momentum is being reduced, genetic drift mutations allows the application of this wide range.
+When random mutations occur, also determined by a probability constant, Eq. 4 and Eq. 5 will be applied an additional time, with M_t being equal a random number between a given negative and positive range. This then, allows the random mutation to effect the phenotype immediately, and allow the lingering, yet weakening effects of the mutation to possibly occur. Additionally, over time, a genetic value becomes neutralized to the effects of genetic drift, in attempt to allow alternative random mutation and genetic drift events to become more pronounced in effect.
+E. Testing Genetic Algorithm Performance
+To test the performance of a particular set of GA conditions for a specific experimental run, there is a distinction made between training and testing. During training, the GA optimizes its solutions to a particular set of images, for each individual person. While during testing the GA evaluates its solutions to a different set of images, although to an identical set of people. These testing results are not included in the calculation of parental fitness for creation of the next generation. Instead, it is gathered during each generation to track the performance of the GA's performance to a controlled set of data, which is effectively unknown to the candidate solutions during each generation allowing unbiased measurement.
+
+	CASE STUDY NEURAL NETWORK MODEL
+The NN used in the case study follows the description provided earlier in section III. 
+A. Neural Network Inputs
+The variables of the network input layer are calculated by input objects derived from a subset of the candidate solution's  genetic values. These input objects contain three primary derived properties, from six total genetic values within the genomic array.
+
+	(X,Y) Position variables which determine the position of the object on the image
+	(Width,Height) Proportion of the image centered on the position variables, to include in network input calculation. This value is fixed throughout the case study.
+	(R,G,B) The threshold color used to determine the variance in the respective portion of the image.
+
+Both the position variables and the color variables, are available to influence the input to the NN model. When formally calculating a specific network input variable z for an individual input object, all colors treated as vectors. A function summates the color vector distances among all image colors and the threshold color, over the entire derived area.
+	
+	z = (?_(x=w_0)^(w_f)¦?_(y=h_0)^(h_f)¦?(C_xy ) ?-(T_c ) ? ? )/xy	(6)
+	
+where (C_xy ) ? is the color at pixel (x,y). (T_c ) ? is defined by the respective input object's threshold color. 
+However, this equation in its current form equates to zero when perfect match of image colors to the specific threshold color occurs. For this case study, the opposite behavior is desired. Since z=0, the additional calculation is performed
+
+	z^'= 1/e^z 	(7)
+
+where z^' is the respective object's final network input. As stated in previous cases, the exact functions chosen are not in question, but rather the evolutionary performance over time, with respect to algorithmic conditions. 
+B. Network Construction & Output Calculation
+During a given experimental run, all candidate solutions will contain a fixed number of genetic values, corresponding to a fixed number of input objects and synapses. The amount of input objects, hidden neurons, and outputs are experimentally predetermined, and setup algorithmically during the generation of the initial population. Additionally, in the context of this case study, only two output values are calculated and used during the evaluation of the network.
+A particular clustering method is chosen when calculating the number of correct matches for a particular candidate solution. First all training images are evaluated on the network. The resulting network output sets are stored alongside their respective image tested. Since the training algorithm has already classified images with respect to a given person, a class/person average set of values can be derived. Therefore, if a network's individual output set is closest in distance to its respective class average value set, a match has occurred. However, this is only the case during training. 
+The process of testing is nearly identical, except the class average value sets are used from the training period, since the images during testing cannot be pre-classified. If matches occur and improve during testing, then some class specific property has been abstracted in some sense to the candidate solution. Additionally, the difference in abstraction level and speed will be more deeply analyzed than an extreme level of recognition itself. 
+	EXPERIMENTAL CONDITIONS
+During the experiments performed, a standard set of variable definitions are kept constant. For example, all mutation values, along with the size of the offspring created every new generation. Constant variables are listed below.	
+
+Constant Property	Constant Value
+Max Population Size	2
+Offspring Generated	1
+Random Mutation Event	.5
+Mutation Range	[-1, 1]
+Genetic Drift	.5
+Genetic Momentum	.5
+Network Inputs	3
+Hidden Neurons	2
+Network Outputs	2
+Training Images	5
+Testing Images	5
+
+In respect to GA variability, there are four fitness functions used during testing. In addition to using the calculated number of matches (MS) as described earlier, three others are tested. A random control  (RC) is used, which assigns a random number to a candidate solution during training. Secondly, a Distance Error (DE) value is calculated for a candidate solution based on the sum of the squares of network outputs and their respective class value sets, determined during the matching calculation. The final fitness function is sorting primarily by matches, and secondly by Distance Error (MS*DE). The other variability tested with respect to the GA, is the number of image classes available during training and testing.
+
+Variable Property	Values Tested
+Fitness Function	MS, MS*DE, DE, RC
+Number of Classes	10, 20, 30
+
+When taking into consideration the entire candidate solution and all potential mutation options, all possibilities need to be accounted for. Listed below are all properties susceptible  to mutational effects during the evolutionary process. Listed below are all mutations available per derived object type, and the respective total mutation options contained within the genomic array.
+
+Type	Values	N / type	N total
+Image Input Object	(X,Y), (R,G,B)	5	15
+Hidden Neuron	bias, sensitivity	2	4
+Synapses	weight	1	10
+Total			29
+
+	 RESULTS
+All combinations of testing conditions were performed before the data was analyzed. Below are shown all fitness functions performances' over generational time with respect to a constant number of image classes. All condition specific cases were performed 10 times with different random seeds, although held constant in order for every set of conditions. An average calculation over all seeds for set of conditions was used to produce the following graphs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Additionally for each individual experimental trial, a value is calculated from the generations occurred in order to meet or exceed a performance threshold. This was chosen to be 66%, and was used to produce an ANOVA tables, analyzing the variance of generation  time among conditions sets to reach this constant threshold.
+
+Overall ANOVA Table
+Squared Multiple R = .366
+Variation Source	df	F-ratio	p-value
+Total Image Classes 	2	24.129	0.000
+Fitness Function	3	3.072	0.031
+Interaction Term	6	.804	0.569
+Error	108		
+
+The following ANOVA tables are calculated, comparing the difference in variation between two groups from the four available. The first contrast compares groups that use the matching function (MS and MS*DE) and are tested against others (DE and RC). In the second, the random control (RC) is tested for significance against all others. This is done to show algorithms behavioral significance, regardless of the hypothesized useable fitness functions.
+
+Contrasted ANOVA Table 	(MS vs. all)
+Variation Source	df	F-ratio	p-value
+MS & MS*DE vs. 
+DE & RC	1	8.648	0.004
+Error	108		
+Contrasted ANOVA Table 	(RC vs. all)
+Variation Source	df	F-ratio	p-value
+Control vs. Others	1	1.610	0.207
+Error	108		
+
+	 CONCLUSION & INTERPRETATIONS
+It is visually observable and moderately supported statistically with significance that using fitness functions determined by the matching score will produce best performance. Since the matching score is a direct definition of the task at hand, a stronger performance makes logical sense. This behavior is supported in the overall ANOVA and the MS contrasted ANOVA, which further highlights matching as significant. 
+Additionally the effect of total image classes created a behavior regarding in variance when reaching the performance threshold. It also important to note that the interaction between Fitness Function and total image classes is not significant, supporting their independence in variation within the experimental procedure.
+When interpreting the contrast ANOVA between the random control and all other fitness functions, it becomes noticeable that the Distance Error function is as only observably performing better than random at 30 image classes. This poor performance at smaller class numbers is most likely to be the cause of the non significant result in the random control against all other cases.
+	DISCUSSION
+Within the scope of the case study, new directions and research opportunities became byproducts of the algorithm construction process. While only testing two types of properties in the given case study, properties listed throughout section VI are all available for testing. Additionally the programmatic structure allows for modularity, proving to be very reusable. 
+Based upon these results, future analysis of differences between unexamined algorithmic conditions and selection of respective optimal parameters allow for continuous areas of questioning and research. However, there are few key areas which have a higher priority than others.
+The primary areas of improvement should include the implementation of a singular crossover function, allowing the respective biological errors associated. This would be the only further genetic effect which should be considered as important and essential to performance analysis opposed to a simpler and more direct process used in this case study. If properly designed, it could generated many if not all the structural genetic operations such as inversions, deletions, duplications, and even chromosomal fission and fusion. 
+Additionally, large ranges of mutation values should be used and analyzed for performance. The knowledge gained could allow a deeper understanding of mutation over several parameters and value ranges. It is also important to not underestimate the power of NNs and the abilities they can perform, however, the NN should only be more deeply defined within the genomic array, allowing crossover and mutation to modify its topology as well. Most importantly, the programmatic structure of software designed for this case study is extremely modular and can be modified many ways. Only a few variables determine the operation of sometimes largely influential functionality. 
+Overall, the research performed has led to a personally deeper understanding of both GAs and NNs. Additionally the understanding the abstraction of information from a set of distributions of values, alongside the training and testing processes, have lead to a powerful and useful research tool available for future experiments. 
+References 
+
+[1] 	Mitchell, Melanie, and Stephanie Forrest. Genetic algorithms and artificial life. Artificial Life 1.3 (1994): 267-289. doi:10.1162/artl.1994.1.3.267 
+
+[2]	Spacek, L. (2007). Face Recognition Data. Face Recognition Data. Retrieved May 1, 2014, from http://cswww.essex.ac.uk/mv/allfaces/faces94.html
+
+[3]	Fogel, L. J., Owens, A. J., & Walsh, M. J. (1966). Artificial intelligence through simulated evolution. New York: John Wiley. 
+
+[4] Rechenberg, I. (1973). Evolutionstrategie: Optimierung technischer système nach Prinzipien der biologischen evolution. Stuttgart: Frommann-Holzboog.
+
+[5]	Goldberg, D. E. (1989). Genetic algorithms in search, optimization, and machine learning. Reading, MA: Addison-Wesley. 
+
+[6]	Montana, D. J., and L. D. Davis (1989). Training feedforward networks using genetic algorithms. In Proceedings of the International Joint Conference on Artificial Intelligence. Morgan Kaufmann.
+
+[7]	Mitchell, Melanie. (1996).  An Introduction to Genetic Algorithms. Cambridge, MA: MIT Press. ISBN 9780585030944.
+
+
